@@ -37,6 +37,7 @@
     "webpack-dev-server": "^4.8.1"
   },
   "dependencies": {
+    "get-google-fonts": "^1.2.2",
     "lodash": "^4.17.21"
   }
 }
