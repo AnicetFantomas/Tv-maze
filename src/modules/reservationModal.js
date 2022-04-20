@@ -64,13 +64,17 @@ const reservationModal = (show) =>{
     reservationtForm.appendChild(nameInput);
 
     const startDateInput = document.createElement('input');
-    startDateInput.type ='text';
+    startDateInput.type ='date';
     startDateInput.className='form-control custom-inputs';
     startDateInput.placeholder = 'Start date';
     reservationtForm.appendChild(startDateInput);
 
+    const reservationList = document.createElement('ul');
+ 
+
+ 
     const endDateInput = document.createElement('input');
-    endDateInput.type ='text';
+    endDateInput.type ='date';
     endDateInput.className='form-control custom-inputs';
     endDateInput.placeholder = 'End date';
     reservationtForm.appendChild(endDateInput);
@@ -86,6 +90,7 @@ const reservationModal = (show) =>{
     modal.appendChild(details);
     modal.appendChild(cross);
     modal.appendChild(commentsHeading);
+    // modal.appendChil(reservationList);
     modal.appendChild(reservationtForm);
 
     // backshadow appending modal
