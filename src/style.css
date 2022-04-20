@@ -51,14 +51,12 @@ nav ul {
 }
 
 .show-list {
-    display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
-    
-    grid-row-gap: 30px; 
-    list-style: none;
-    align-items: center;
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+  grid-row-gap: 30px;
+  list-style: none;
+  align-items: center;
 }
-
 
 .show-item {
   position: relative;
@@ -72,23 +70,20 @@ nav ul {
 }
 
 .show-item:hover {
-  transform: translateZ(0px);
+  transform: translateZ(0);
   box-shadow: 0 5px 20px rgba(0, 0, 0, 0.4);
 }
 
 .show-item img {
-    object-fit: fill;
-    width: 100%;
-    height: 100%;
+  object-fit: fill;
+  width: 100%;
+  height: 100%;
 }
 
 figcaption {
-    padding: 10px 10px 20px 10px;
+  padding: 10px 10px 20px 10px;
 }
 
 figure {
-    border: 5px solid white;
+  border: 5px solid white;
 }
-
-
-  
