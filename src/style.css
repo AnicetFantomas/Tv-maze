@@ -18,7 +18,7 @@ nav {
   height: 80px;
 }
 
-ul {
+nav ul {
   list-style: none;
   padding: 0;
   display: flex;
@@ -49,3 +49,42 @@ ul {
   justify-content: center;
   align-items: center;
 }
+
+.show-list {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+    
+    grid-row-gap: 30px; 
+    list-style: none;
+    align-items: center;
+}
+
+
+.show-item {
+  position: relative;
+  /* perspective: 1000px; */
+  cursor: pointer;
+  width: 200px;
+  transform: translateZ(-40px);
+  transform-style: preserve-3d;
+  box-shadow: 0 5px 20px rgba(0, 0, 0, 0.3);
+  transition: all 0.4s cubic-bezier(0.165, 0.84, 0.44, 1);
+}
+
+.show-item:hover {
+  transform: translateZ(0px);
+  box-shadow: 0 5px 20px rgba(0, 0, 0, 0.4);
+}
+
+.show-item img {
+    object-fit: fill;
+    width: 100%;
+    height: 100%;
+}
+
+figcaption {
+    padding: 10px 10px 20px 10px;
+}
+
+
+  
