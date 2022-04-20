@@ -88,16 +88,15 @@ figcaption {
 }
 
 figcaption .likebutton {
-    width: 30px !important;
-    cursor: pointer;
-    transition: all .2s ease-in-out;
-    
+  width: 30px !important;
+  cursor: pointer;
+  transition: all 0.2s ease-in-out;
 }
 
 figcaption .likebutton:hover {
-    width: 30px !important;
-    cursor: pointer;
-    transform: scale(1.2);
+  width: 30px !important;
+  cursor: pointer;
+  transform: scale(1.2);
 }
 
 figure {
