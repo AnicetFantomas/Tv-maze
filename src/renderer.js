@@ -16,14 +16,20 @@ export default class Renderer{
           const button = document.createElement('button');
           button.textContent = 'Comments';
           button.className = 'btn btn-primary btn-md card-comment-btn';
+          const reservationBtn = document.createElement('button');
+          reservationBtn.textContent = 'Reservations';
+          reservationBtn.className = 'btn btn-primary btn-md card-comment-btn';
 
           button.onclick = () =>{
              commentModal(shows[i]);
           }
 
+         
+
           figure.appendChild(img);
           figure.appendChild(figCaption);
           figure.appendChild(button);
+          figure.appendChild(reservationBtn);
          
           li.appendChild(figure);
           movieList.appendChild(li);

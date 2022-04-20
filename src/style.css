@@ -90,12 +90,12 @@ figure {
   border: 5px solid white;
 }
 
-.card-comment-btn{
+.card-comment-btn {
   background-color: rgb(60, 148, 139) !important;
 }
 
 /* modal css */
-.backshadow{
+.backshadow {
   width: 100%;
   height: 100vh;
   position: fixed;
@@ -108,13 +108,13 @@ figure {
   align-items: center;
 }
 
-.backshadow .modal{
+.backshadow .modal {
   width: 95%;
   height: 90vh;
-  background-color: #FFF;
+  background-color: #fff;
   position: relative;
   padding: 16px;
-  border: 1px solid #DFE1E6;
+  border: 1px solid #dfe1e6;
   box-shadow: 0 48px 48px rgba(37, 47, 137, 8%);
   overflow-y: auto;
   overflow-x: hidden;
@@ -123,7 +123,7 @@ figure {
   flex-direction: column;
 }
 
-.backshadow .modal .img-div{
+.backshadow .modal .img-div {
   width: 100%;
   height: auto;
   display: flex;
@@ -132,48 +132,48 @@ figure {
   margin-top: 10px;
 }
 
-.backshadow .modal .img-div .img{
+.backshadow .modal .img-div .img {
   width: 100%;
   height: 100%;
 }
 
-.movie-title{
+.movie-title {
   margin-top: 10px;
 }
 
-.movie-details{
+.movie-details {
   width: 100%;
   display: flex;
   justify-content: space-between;
   align-items: center;
-  padding:20px;
+  padding: 20px;
   margin-top: 10px;
   font-weight: bold;
 }
 
-.cross{
+.cross {
   position: absolute;
   top: 25px;
   right: 15px;
 }
 
-.comments-heading{
+.comments-heading {
   width: 100%;
   text-align: center;
   margin-top: 20px;
 }
 
-.comment-form{
+.comment-form {
   width: 100%;
 }
 
-.comment-form .custom-inputs{
+.comment-form .custom-inputs {
   margin-bottom: 10px;
 }
 
-@media(min-width: 769px){
-  .backshadow .modal{
-      width: 80%;
-      height: 631px;
+@media (min-width: 769px) {
+  .backshadow .modal {
+    width: 80%;
+    height: 631px;
   }
 }
