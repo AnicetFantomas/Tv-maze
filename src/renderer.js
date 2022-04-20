@@ -1,4 +1,5 @@
 import commentModal from './modules/commentModal.js';
+import reservationModal from './modules/reservationModal.js';
 export default class Renderer{
     static displayShows(shows) {
         const movieList = document.querySelector('.show-list');
@@ -24,7 +25,9 @@ export default class Renderer{
              commentModal(shows[i]);
           }
 
-         
+         reservationBtn.onclick = () => {
+             reservationModal(shows[i])
+         }
 
           figure.appendChild(img);
           figure.appendChild(figCaption);
