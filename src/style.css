@@ -63,7 +63,6 @@ nav ul {
 .show-item {
   position: relative;
   perspective: 1000px;
-  cursor: pointer;
   width: 250px;
   transform: translateZ(-40px);
   transform-style: preserve-3d;
@@ -83,7 +82,22 @@ nav ul {
 }
 
 figcaption {
+  display: flex;
+  justify-content: space-between;
   padding: 10px 10px 20px 10px;
+}
+
+figcaption .likebutton {
+    width: 30px !important;
+    cursor: pointer;
+    transition: all .2s ease-in-out;
+    
+}
+
+figcaption .likebutton:hover {
+    width: 30px !important;
+    cursor: pointer;
+    transform: scale(1.2);
 }
 
 figure {
