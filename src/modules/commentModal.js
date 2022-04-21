@@ -17,7 +17,7 @@ const commentModal = async(show) =>{
 
     // child of imgDiv
     const commentModalImg = document.createElement('img');
-    commentModalImg.src = show.image.medium;
+    commentModalImg.src = show.image;
     commentModalImg.setAttribute('alt',"moview-image");
     imgDiv.appendChild(commentModalImg);
 
@@ -32,7 +32,8 @@ const commentModal = async(show) =>{
 
     // children of details
     const genre = document.createElement('span');
-    genre.textContent = show.genres[0];
+    console.log(show);
+    genre.textContent = show.genre[0];
 
     const language = document.createElement('span');
     language.textContent = show.language;
