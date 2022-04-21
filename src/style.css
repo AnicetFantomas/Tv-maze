@@ -171,6 +171,20 @@ figure {
   margin-bottom: 10px;
 }
 
+.comments-container {
+  margin-top: 10px;
+  margin-bottom: 10px;
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  font-size: 12px;
+  font-weight: 600;
+}
+
+.comments-container .comment {
+  margin-bottom: 5px;
+}
+
 @media (min-width: 769px) {
   .backshadow .modal {
     width: 80%;

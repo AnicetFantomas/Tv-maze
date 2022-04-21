@@ -24,8 +24,6 @@ export default class Renderer{
              commentModal(shows[i]);
           }
 
-         
-
           figure.appendChild(img);
           figure.appendChild(figCaption);
           figure.appendChild(button);
