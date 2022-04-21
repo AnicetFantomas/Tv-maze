@@ -23,7 +23,7 @@ const commentModal = async(show) =>{
 
     // child of modal
     const title = document.createElement('h3');
-    title.textContent = show.name;
+    title.textContent = show.title;
     title.className = 'movie-title';
 
     // child of modal
@@ -32,7 +32,6 @@ const commentModal = async(show) =>{
 
     // children of details
     const genre = document.createElement('span');
-    console.log(show);
     genre.textContent = show.genre[0];
 
     const language = document.createElement('span');

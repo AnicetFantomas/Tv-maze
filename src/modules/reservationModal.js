@@ -16,13 +16,13 @@ const reservationModal = (show) =>{
 
     // child of imgDiv
     const commentModalImg = document.createElement('img');
-    commentModalImg.src = show.image.medium;
+    commentModalImg.src = show.image;
     commentModalImg.setAttribute('alt',"moview-image");
     imgDiv.appendChild(commentModalImg);
 
     // child of modal
     const title = document.createElement('h3');
-    title.textContent = show.name;
+    title.textContent = show.title;
     title.className = 'movie-title';
 
     // child of modal
@@ -31,7 +31,7 @@ const reservationModal = (show) =>{
 
     // children of details
     const genre = document.createElement('span');
-    genre.textContent = show.genres[0];
+    genre.textContent = show.genre[0];
 
     const language = document.createElement('span');
     language.textContent = show.language;
@@ -70,8 +70,6 @@ const reservationModal = (show) =>{
     reservationtForm.appendChild(startDateInput);
 
     const reservationList = document.createElement('ul');
- 
-
  
     const endDateInput = document.createElement('input');
     endDateInput.type ='date';
