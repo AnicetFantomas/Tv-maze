@@ -1,4 +1,5 @@
-const commentModal = (show) =>{
+const commentModal = async(show) =>{
+
     // modal container
     const modalContainer = document.getElementById('modal-container');
 
@@ -16,7 +17,7 @@ const commentModal = (show) =>{
 
     // child of imgDiv
     const commentModalImg = document.createElement('img');
-    commentModalImg.src = show.image.medium;
+    commentModalImg.src = show.image;
     commentModalImg.setAttribute('alt',"moview-image");
     imgDiv.appendChild(commentModalImg);
 
@@ -31,7 +32,8 @@ const commentModal = (show) =>{
 
     // children of details
     const genre = document.createElement('span');
-    genre.textContent = show.genres[0];
+    console.log(show);
+    genre.textContent = show.genre[0];
 
     const language = document.createElement('span');
     language.textContent = show.language;
@@ -49,13 +51,41 @@ const commentModal = (show) =>{
     })
 
     // child of modal
-    const commentsHeading = document.createElement('h5');
-    commentsHeading.textContent = 'Comments (2)';
-    commentsHeading.className = 'comments-heading';
+    // fetching involvment API
+    let commentsContainer;
+    let commentsHeading;
+    const request = await fetch(`https://us-central1-involvement-api.cloudfunctions.net/capstoneApi/apps/bPjiahSZ0zVQqd4kdfjM/comments?item_id=${show.id}`);
+    const response = await request.json();
+    if(response.length > 0){
+        response.forEach((data)=>{
+        commentsContainer = document.createElement('div');
+        commentsContainer.className = 'comments-container';
+        const comment = document.createElement('p');
+        comment.className = 'comment';
+        comment.textContent = `${data.creation_date} ${data.username} ${data.comment}`
+        commentsContainer.appendChild(comment);
+      })
+      commentsHeading = document.createElement('h5');
+      commentsHeading.className = 'comments-heading';
+      commentsHeading.textContent = `Comments (${response.length})`;
+    }
+    else{
+      console.log('no response');
+      commentsContainer = document.createElement('div');
+      commentsContainer.className = 'comments-container';
+      commentsContainer.textContent = 'No comments found';
+      commentsHeading = document.createElement('h5');
+      commentsHeading.className = 'comments-heading';
+      commentsHeading.textContent = 'Comments (0)';
+    }
 
     // child of modal
     const commentForm = document.createElement('form');
     commentForm.className = 'form-group comment-form';
+
+    commentForm.addEventListener('submit',(e)=>{
+      e.preventDefault();
+    })
 
     const nameInput = document.createElement('input');
     nameInput.type ='text';
@@ -63,8 +93,7 @@ const commentModal = (show) =>{
     nameInput.placeholder = 'Your Name';
     commentForm.appendChild(nameInput);
 
-    const insightInput = document.createElement('input');
-    insightInput.type ='text';
+    const insightInput = document.createElement('textarea');
     insightInput.className='form-control custom-inputs';
     insightInput.placeholder = 'Your Insights';
     commentForm.appendChild(insightInput);
@@ -80,6 +109,7 @@ const commentModal = (show) =>{
     modal.appendChild(details);
     modal.appendChild(cross);
     modal.appendChild(commentsHeading);
+    modal.appendChild(commentsContainer);
     modal.appendChild(commentForm);
 
     // backshadow appending modal
@@ -87,6 +117,7 @@ const commentModal = (show) =>{
 
     // modal container appending backshadow
     modalContainer.appendChild(backshadow);
+
 }
 
 export default commentModal;
