@@ -13,7 +13,7 @@ const reservationModal = async (showId, shows) => {
   const reservationCounter = reservationModalView.querySelector('.reservations #reservation-counter');
   const reservationList = reservationModalView.querySelector('.reservations #reservation-list');
   const closeEl = reservationModalView.querySelector('.close');
-  const showIdEl = reservationModalView.querySelector('form #show_id');
+  const showIdEl = reservationModalView.querySelector('form #show_id-resrv');
 
   showIdEl.value = showId;
 
