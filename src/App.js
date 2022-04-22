@@ -9,8 +9,7 @@ export default class TVShowApp {
   static async initialize() {
     this.tvMazeApi = new TVMazeAPI();
     let shows = await this.tvMazeApi.getShows(1);
-    // this.allLikes = await TVShowApp.getAllLikes(this.uuid);
-    this.allLikes = [];
+    this.allLikes = await TVShowApp.getAllLikes(this.uuid);
 
     shows = shows.map((show) => {
         const showlikes = this.allLikes.find(like => like.item_id === show.id) || {likes: 0, item_id: show.id};
@@ -45,6 +44,10 @@ export default class TVShowApp {
 
   static async postComment(showId, username, comment) {
       const response = await this.tvMazeApi.postComments(this.uuid, showId, username, comment)
+  }
+
+  static async postReservation(showId, username, start_date, end_date) {
+      const response = await this.tvMazeApi.postReservations(this.uuid, showId, username, start_date, end_date);
   }
 
   

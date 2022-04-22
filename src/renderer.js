@@ -27,7 +27,7 @@ export default class Renderer{
       }));
 
       document.querySelectorAll('.reservations').forEach((reservationBtn, i) => reservationBtn.addEventListener('click', (ev) => {
-        reservationModal(ev.target.id.split('_')[1]);
+        reservationModal(ev.target.id.split('_')[1], shows);
       }));
 
       document.querySelectorAll('.likebutton').forEach((likeBtn, i) => likeBtn.addEventListener('click', (ev) => {
@@ -53,6 +53,26 @@ export default class Renderer{
 
     });
 
+    document.querySelector('#post-reservation-form').addEventListener('submit', async (ev) => { 
+        ev.preventDefault();
+        let username = ev.target.elements.username.value.trim();
+        let start_date = ev.target.elements.state_date.value.trim();
+        let end_date = ev.target.elements.end_date.value.trim();
+        let showID = ev.target.elements.show_id.value.trim();
+
+        if (username === "" || start_date === "" || end_date === "") return;
+
+        await TVShowApp.postReservation(parseInt(showID), username, start_date, end_date);
+
+        ev.target.elements.username.value = "";
+        ev.target.elements.state_date.value = "";
+        ev.target.elements.end_date.value = "";
+
+        const reservations = await TVShowApp.getReservations(parseInt(showID));
+        Renderer.updateReservationList(reservations);
+
+    });
+
     }
 
     static updateLike(showId, currentLikes) {
@@ -67,8 +87,23 @@ export default class Renderer{
         comments.forEach(comment => {
             commentsListEl.innerHTML += `<li>Date: ${comment.creation_date}:<p> ${comment.comment}</p> - By: ${comment.username}</li>`
         });
+
+        const commentModalView = document.getElementById('comment-modal');
         const commentCounter = commentModalView.querySelector('.comments #comment-counter');
         commentCounter.textContent = comments.length;
+    }
+
+    static updateReservationList(reservations){
+        const reservationListEl = document.querySelector(`#reservation-list`);
+        
+        reservationListEl.innerHTML = "";
+        reservations.forEach(reservation => {
+            reservationListEl.innerHTML += `<li>Date: ${reservation.username}:<p>From: ${reservation.date_start} To: ${reservation.date_end}</p></li>`
+        });
+
+        const reservationModalView = document.getElementById('reservation-modal');
+        const reservationCounter = reservationModalView.querySelector('.reservations #reservation-counter');
+        reservationCounter.textContent = reservations.length;   
     }
 
     

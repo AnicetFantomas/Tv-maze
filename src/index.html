@@ -61,8 +61,31 @@
 
 
     <!-- reservation modal box -->
-    <div id="reservation-popUp">
-        
+    <div id="reservation-modal" class="modal">
+        <div class="modal-content">
+          <span class="close">&times;</span>
+          <div class="movie-info">
+            <img id="reservation-show-image" />
+            <h2 id="reservation-title"></h2>
+            <p id="reservation-movie-summary"></p>
+          </div>
+          <div class="reservations">
+            <h3>Reservations <span id="reservation-counter"></span></h3>
+            <ul id="reservation-list">
+                
+            </ul>
+          </div>
+          <div class="reservation-form">
+              <form id="post-reservation-form">
+                  <input type="hidden" id="show_id" name="show_id">
+                  <label>Username:</label>
+                  <input type="text" name="username" />
+                  <input type="date" name="state_date"/>
+                  <input type="date" name="end_date"/>
+                  <button class="btn btn-primary" type="submit">Submit</button>
+              </form>
+          </div>
+        </div>
     </div>
     <!-- end of comment modal box -->
 </body>

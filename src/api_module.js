@@ -15,12 +15,21 @@ export default class TVMazeAPI {
   }
 
   async getAllLikes(appId){
-      const response = await fetch(`${this.involvementAPIBaseUrl}/apps/${appId}/likes`, {
-          method: 'GET'
-      });
-
-      const result = await response.json();
-      return result;
+      try{
+        const response = await fetch(`${this.involvementAPIBaseUrl}/apps/${appId}/likes`, {
+            method: 'GET'
+        });
+        
+        if (response.ok) {
+          const result = await response.json();
+          return result;
+        }
+        throw new Error('no likes');
+      }catch(e){
+        return [];
+      }
+      
+      
   }
 
   async getLikes(appId, showId){
@@ -90,11 +99,10 @@ export default class TVMazeAPI {
               'Content-Type': 'application/json',
             },
         });
-        if (response.ok) {
-            const reservations = await response.json();
-            return reservations;
-        }
-        throw new Error('There are no reservations');
+        
+        const reservations = await response.json();
+        return reservations;
+        
       }catch(e){
           
         return [];
@@ -103,8 +111,8 @@ export default class TVMazeAPI {
   }
 
   async postReservations(appId, showId, username, date_start, date_end) {
-    const response = await fetch(`${this.involvementAPIBaseUrl}/apps/${appId}/reservations?item_id=${showId}`, {
-        method: 'GET',
+    const response = await fetch(`${this.involvementAPIBaseUrl}/apps/${appId}/reservations`, {
+        method: 'POST',
         body: JSON.stringify({
             item_id: showId,
             username,

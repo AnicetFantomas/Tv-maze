@@ -23,7 +23,7 @@ const commentModal = async (showId, shows) => {
   showSummaryEl.innerHTML = show.summary;
 
   const response = await TVShowApp.getComments(showId);
-  commentCounter.textContent = `(${typeof response.length === 'undefined'?0:response.length})`;
+  commentCounter.textContent = `(${typeof response.length === 'undefined' ? 0 : response.length})`;
 
   if (response.length > 0){
   commentList.innerHTML = "";
