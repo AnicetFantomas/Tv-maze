@@ -1,4 +1,6 @@
-const reservationModal = (show) =>{
+import TVShowApp from "../App";
+
+const reservationModal = async (show) =>{
     // modal container
     const modalContainer = document.getElementById('reservation-popUp');
 
@@ -48,10 +50,26 @@ const reservationModal = (show) =>{
       backshadow.style.display = 'none';
     })
 
+    const response = await TVShowApp.getReservations(show.id);
+    const reservationList = document.createElement('ul');
+    console.log(response);
+    if (response.length > 0) {
+      response.forEach(reservation => {
+        const listItem = document.createElement('li');
+        listItem.textContent = `From: ${reservation.date_start} To: ${reservation.date_end} UserName: ${reservation.username}`
+        reservationList.appendChild(listItem);
+      });
+    }else{
+      const listItem = document.createElement('li');
+        listItem.textContent = `No Reservations exist for this show`
+        reservationList.appendChild(listItem);
+    }
+    
+    
     // child of modal
-    const commentsHeading = document.createElement('h5');
-    commentsHeading.textContent = 'Reservations';
-    commentsHeading.className = 'comments-heading';
+    const reservationHeading = document.createElement('h5');
+    reservationHeading.textContent = `Reservations(${response.length})`;
+    reservationHeading.className = 'comments-heading';
 
     // child of modal
     const reservationtForm = document.createElement('form');
@@ -69,8 +87,6 @@ const reservationModal = (show) =>{
     startDateInput.placeholder = 'Start date';
     reservationtForm.appendChild(startDateInput);
 
-    const reservationList = document.createElement('ul');
- 
     const endDateInput = document.createElement('input');
     endDateInput.type ='date';
     endDateInput.className='form-control custom-inputs';
@@ -87,8 +103,8 @@ const reservationModal = (show) =>{
     modal.appendChild(title);
     modal.appendChild(details);
     modal.appendChild(cross);
-    modal.appendChild(commentsHeading);
-    // modal.appendChil(reservationList);
+    modal.appendChild(reservationHeading);
+    modal.appendChild(reservationList);
     modal.appendChild(reservationtForm);
 
     // backshadow appending modal

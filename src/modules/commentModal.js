@@ -1,6 +1,7 @@
-const commentModal = async(show) =>{
+import TVShowApp from "../App";
+const commentModal = async (show) => {
 
-    // modal container
+      // modal container
     const modalContainer = document.getElementById('modal-container');
 
     // boxshadow child of modal container
@@ -32,7 +33,8 @@ const commentModal = async(show) =>{
 
     // children of details
     const genre = document.createElement('span');
-    genre.textContent = show.genre[0];
+    genre.textContent = show.genres[0];
+
 
     const language = document.createElement('span');
     language.textContent = show.language;
@@ -53,23 +55,24 @@ const commentModal = async(show) =>{
     // fetching involvment API
     let commentsContainer;
     let commentsHeading;
-    const request = await fetch(`https://us-central1-involvement-api.cloudfunctions.net/capstoneApi/apps/bPjiahSZ0zVQqd4kdfjM/comments?item_id=${show.id}`);
-    const response = await request.json();
-    if(response.length > 0){
-        commentsContainer = document.createElement('div');
-        commentsContainer.className = 'comments-container';
-        response.forEach((data)=>{
-        console.log(data);
-        commentsContainer.innerHTML += `
-          <p>${data.creation_date} ${data.username} ${data.comment}</p>
-        `;
+
+    const response = await TVShowApp.getComments(show.id)
+    console.log(response);
+    if (response.length > 0){
+      commentsContainer = document.createElement('div');
+      commentsContainer.className = 'comments-container';
+      response.forEach((data)=>{
+          const comment = document.createElement('p');
+          comment.className = 'comment';
+          comment.textContent = `${data.creation_date} ${data.username} ${data.comment}`
+          commentsContainer.appendChild(comment);
+
       })
       commentsHeading = document.createElement('h5');
       commentsHeading.className = 'comments-heading';
       commentsHeading.textContent = `Comments (${response.length})`;
     }
     else{
-      console.log('no response');
       commentsContainer = document.createElement('div');
       commentsContainer.className = 'comments-container';
       commentsContainer.textContent = 'No comments found';
@@ -137,7 +140,6 @@ const commentModal = async(show) =>{
 
     // modal container appending backshadow
     modalContainer.appendChild(backshadow);
-
 }
 
 export default commentModal;

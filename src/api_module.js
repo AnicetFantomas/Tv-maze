@@ -50,18 +50,73 @@ export default class TVMazeAPI {
     return mylikes;
   }
 
-  async getComments(appId, showId){
-    const commentsResponse = await fetch(`${this.involvementAPIBaseUrl}/apps/${appId}/comments?item_id=${showId}`, {
+  async getComments(appId, showId) {
+      try{
+        const commentsResponse = await fetch(`${this.involvementAPIBaseUrl}/apps/${appId}/comments?item_id=${showId}`, {
+            method: 'GET',
+            headers: {
+              'Content-Type': 'application/json',
+            },
+        });
+    
+        const comments = await commentsResponse.json();
+        return comments;
+      }catch( e ){
+        return [{}];
+      }
+    
+  }
+
+  async postComments(appId, showId, username, comment){
+    const commentsResponse = await fetch(`${this.involvementAPIBaseUrl}/apps/${appId}/comments`, {
         method: 'POST',
         body: JSON.stringify({
-            item_id: showId
+            item_id: showId,
+            username,
+            comment
         }),
         headers: {
           'Content-Type': 'application/json',
         },
     });
 
-    const comments = await commentsResponse.json();
-    return comments;
+    return commentsResponse;
+  }
+
+  async getReservations(appId, showId){
+      try{
+        const response = await fetch(`${this.involvementAPIBaseUrl}/apps/${appId}/reservations?item_id=${showId}`, {
+            method: 'GET',
+            headers: {
+              'Content-Type': 'application/json',
+            },
+        });
+        if (response.ok) {
+            const reservations = await response.json();
+            return reservations;
+        }
+        throw new Error('There are no reservations');
+      }catch(e){
+          
+        return [];
+      }
+    
+  }
+
+  async postReservations(appId, showId, username, date_start, date_end) {
+    const response = await fetch(`${this.involvementAPIBaseUrl}/apps/${appId}/reservations?item_id=${showId}`, {
+        method: 'GET',
+        body: JSON.stringify({
+            item_id: showId,
+            username,
+            date_start,
+            date_end,
+        }),
+        headers: {
+          'Content-Type': 'application/json',
+        },
+    });
+
+    return response
   }
 }
