@@ -1,7 +1,7 @@
 import TVShowApp from "../App";
 const commentModal = async (show) => {
 
-      // modal container
+    // modal container
     const modalContainer = document.getElementById('modal-container');
 
     // boxshadow child of modal container
@@ -55,31 +55,32 @@ const commentModal = async (show) => {
     // fetching involvment API
     let commentsContainer;
     let commentsHeading;
-
-    const response = await TVShowApp.getComments(show.id)
-    console.log(response);
-    if (response.length > 0){
-      commentsContainer = document.createElement('div');
-      commentsContainer.className = 'comments-container';
-      response.forEach((data)=>{
-          const comment = document.createElement('p');
-          comment.className = 'comment';
-          comment.textContent = `${data.creation_date} ${data.username} ${data.comment}`
-          commentsContainer.appendChild(comment);
-
-      })
-      commentsHeading = document.createElement('h5');
-      commentsHeading.className = 'comments-heading';
-      commentsHeading.textContent = `Comments (${response.length})`;
+    let response = await TVShowApp.getComments(show.id);
+    function printData(){
+      console.log('function triggered');
+      if (response.length > 0){
+        commentsContainer = document.createElement('div');
+        commentsContainer.className = 'comments-container';
+        response.forEach((data)=>{
+            const comment = document.createElement('p');
+            comment.className = 'comment';
+            comment.textContent = `${data.creation_date} ${data.username} ${data.comment}`
+            commentsContainer.appendChild(comment);
+        })
+        commentsHeading = document.createElement('h5');
+        commentsHeading.className = 'comments-heading';
+        commentsHeading.textContent = `Comments (${response.length})`;
+      }
+      else{
+        commentsContainer = document.createElement('div');
+        commentsContainer.className = 'comments-container';
+        commentsContainer.textContent = 'No comments found';
+        commentsHeading = document.createElement('h5');
+        commentsHeading.className = 'comments-heading';
+        commentsHeading.textContent = 'Comments (0)';
+      }
     }
-    else{
-      commentsContainer = document.createElement('div');
-      commentsContainer.className = 'comments-container';
-      commentsContainer.textContent = 'No comments found';
-      commentsHeading = document.createElement('h5');
-      commentsHeading.className = 'comments-heading';
-      commentsHeading.textContent = 'Comments (0)';
-    }
+    printData();
 
     // child of modal
     const commentForm = document.createElement('form');
@@ -102,9 +103,41 @@ const commentModal = async (show) => {
         },
       }).then((res)=>{
         return res;
-      }).then(()=>{
+      }).then(async()=>{
         username.value='';
         insights.value='';
+        // ajax approach
+        var xhttp = new XMLHttpRequest();
+        xhttp.onreadystatechange = function() {
+          if (this.readyState == 4 && this.status == 200) {
+            const response = JSON.parse(this.responseText);
+            if (response.length > 0){
+              commentsContainer = document.createElement('div');
+              commentsContainer.className = 'comments-container';
+              response.forEach((data)=>{
+                  const comment = document.createElement('p');
+                  comment.className = 'comment';
+                  comment.textContent = `${data.creation_date} ${data.username} ${data.comment}`
+                  commentsContainer.appendChild(comment);
+              })
+              commentsHeading = document.createElement('h5');
+              commentsHeading.className = 'comments-heading';
+              commentsHeading.textContent = `Comments (${response.length})`;
+
+              modal.innerHTML = "";
+              
+              modal.appendChild(imgDiv);
+              modal.appendChild(title);
+              modal.appendChild(details);
+              modal.appendChild(cross);
+              modal.appendChild(commentsHeading);
+              modal.appendChild(commentsContainer);
+              modal.appendChild(commentForm);
+            }
+          }
+        };
+        xhttp.open("GET", `https://us-central1-involvement-api.cloudfunctions.net/capstoneApi/apps/bPjiahSZ0zVQqd4kdfjM/comments?item_id=${show.id}`, true);
+        xhttp.send();
       })
     })
 
