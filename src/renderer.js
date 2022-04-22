@@ -36,13 +36,13 @@ export default class Renderer{
              commentModal(shows[i]);
           }
 
- figCaptionImg.onclick = () => {
+          figCaptionImg.onclick = () => {
             TVShowApp.like(shows[i].id);
           }
 
-         reservationBtn.onclick = () => {
+          reservationBtn.onclick = () => {
              reservationModal(shows[i])
-         }
+          }
 
           figure.appendChild(img);
           figure.appendChild(figCaption);

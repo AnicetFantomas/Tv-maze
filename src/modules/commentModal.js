@@ -23,7 +23,7 @@ const commentModal = async(show) =>{
 
     // child of modal
     const title = document.createElement('h3');
-    title.textContent = show.name;
+    title.textContent = show.title;
     title.className = 'movie-title';
 
     // child of modal
@@ -32,7 +32,6 @@ const commentModal = async(show) =>{
 
     // children of details
     const genre = document.createElement('span');
-    console.log(show);
     genre.textContent = show.genre[0];
 
     const language = document.createElement('span');
@@ -57,13 +56,13 @@ const commentModal = async(show) =>{
     const request = await fetch(`https://us-central1-involvement-api.cloudfunctions.net/capstoneApi/apps/bPjiahSZ0zVQqd4kdfjM/comments?item_id=${show.id}`);
     const response = await request.json();
     if(response.length > 0){
-        response.forEach((data)=>{
         commentsContainer = document.createElement('div');
         commentsContainer.className = 'comments-container';
-        const comment = document.createElement('p');
-        comment.className = 'comment';
-        comment.textContent = `${data.creation_date} ${data.username} ${data.comment}`
-        commentsContainer.appendChild(comment);
+        response.forEach((data)=>{
+        console.log(data);
+        commentsContainer.innerHTML += `
+          <p>${data.creation_date} ${data.username} ${data.comment}</p>
+        `;
       })
       commentsHeading = document.createElement('h5');
       commentsHeading.className = 'comments-heading';
@@ -85,16 +84,37 @@ const commentModal = async(show) =>{
 
     commentForm.addEventListener('submit',(e)=>{
       e.preventDefault();
+      const username = document.querySelector('.username');
+      const insights = document.querySelector('.insights');
+      fetch('https://us-central1-involvement-api.cloudfunctions.net/capstoneApi/apps/bPjiahSZ0zVQqd4kdfjM/comments',{
+        method: 'POST',
+        body: JSON.stringify({
+          item_id: show.id,
+          username: username.value,
+          comment: insights.value
+        }),
+        headers: {
+          'Content-type': 'application/json; charset=UTF-8',
+          'Accept': 'application/json'
+        },
+      }).then((res)=>{
+        return res;
+      }).then(()=>{
+        username.value='';
+        insights.value='';
+      })
     })
 
     const nameInput = document.createElement('input');
     nameInput.type ='text';
-    nameInput.className='form-control custom-inputs';
+    nameInput.required = true;
+    nameInput.className='form-control custom-inputs username';
     nameInput.placeholder = 'Your Name';
     commentForm.appendChild(nameInput);
 
     const insightInput = document.createElement('textarea');
-    insightInput.className='form-control custom-inputs';
+    insightInput.setAttribute("required", true);
+    insightInput.className='form-control custom-inputs insights';
     insightInput.placeholder = 'Your Insights';
     commentForm.appendChild(insightInput);
 
