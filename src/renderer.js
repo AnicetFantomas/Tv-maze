@@ -36,7 +36,6 @@ export default class Renderer{
       document.querySelectorAll('.likebutton').forEach((likeBtn, i) => likeBtn.addEventListener('click', (ev) => {
         TVShowApp.like(shows[i].id);
       }));
-
     }
 
     static updateLike(showId, currentLikes) {

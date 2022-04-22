@@ -10,7 +10,7 @@ export default class TVShowApp {
     this.tvMazeApi = new TVMazeAPI();
     let shows = await this.tvMazeApi.getShows(1);
     this.allLikes = await TVShowApp.getAllLikes(this.uuid);
-    
+
     shows = shows.map((show) => {
         const showlikes = this.allLikes.find(like => like.item_id === show.id) || {likes: 0, item_id: show.id};
         const myShow = new Show(show.id, show.name, show.image.medium, show.summary,show.genres, show.language, showlikes.likes);
@@ -18,7 +18,6 @@ export default class TVShowApp {
     });
     
     shows = shows.filter((_, i) => i < 25)
-    
     Renderer.displayShows(shows);
   }
 
