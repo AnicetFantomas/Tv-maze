@@ -23,23 +23,54 @@ export default class Renderer{
 
       document.querySelector('.show-count').innerHTML = `Number of Shows: ${shows.length}`;
       document.querySelectorAll('.comments').forEach((commentBtn, i) => commentBtn.addEventListener('click', (ev) => {
-        // commentModal(shows[ev.target.id.split('_')[1]])
-        // console.log(ev.target.id.split('_')[1])
-        commentModal(shows[i])
+        commentModal(ev.target.id.split('_')[1], shows);    
       }));
 
       document.querySelectorAll('.reservations').forEach((reservationBtn, i) => reservationBtn.addEventListener('click', (ev) => {
-        //ev.target.id.split('_')[1]
-        reservationModal(shows[i])
+        reservationModal(ev.target.id.split('_')[1]);
       }));
 
       document.querySelectorAll('.likebutton').forEach((likeBtn, i) => likeBtn.addEventListener('click', (ev) => {
         TVShowApp.like(shows[i].id);
       }));
+
+    document.querySelector('#post-comment-form').addEventListener('submit', async (ev) => {
+        ev.preventDefault();
+        
+        let username = ev.target.elements.username.value.trim();
+        let comment = ev.target.elements.comment.value.trim();
+        let showID = ev.target.elements.show_id.value.trim();
+        
+        if (username === "" || comment === "") return;
+        
+        await TVShowApp.postComment(parseInt(showID), username, comment);
+
+        ev.target.elements.username.value = "";
+        ev.target.elements.comment.value = "";
+
+        const comments = await TVShowApp.getComments(parseInt(showID));
+        Renderer.updateCommentList(comments);
+
+    });
+
     }
 
     static updateLike(showId, currentLikes) {
         const likeSpan = document.querySelector(`#likes_${showId}`);
         likeSpan.textContent = `${currentLikes} ${currentLikes <= 1?'Like':'Likes'}`;
     }
+
+    static updateCommentList(comments){
+        const commentsListEl = document.querySelector(`#comment-list`);
+        
+        commentsListEl.innerHTML = "";
+        comments.forEach(comment => {
+            commentsListEl.innerHTML += `<li>Date: ${comment.creation_date}:<p> ${comment.comment}</p> - By: ${comment.username}</li>`
+        });
+        const commentCounter = commentModalView.querySelector('.comments #comment-counter');
+        commentCounter.textContent = comments.length;
+    }
+
+    
+
 }

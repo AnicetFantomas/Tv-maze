@@ -58,11 +58,10 @@ export default class TVMazeAPI {
               'Content-Type': 'application/json',
             },
         });
-    
         const comments = await commentsResponse.json();
-        return comments;
+          return comments;
       }catch( e ){
-        return [{}];
+        return [];
       }
     
   }

@@ -3,13 +3,14 @@ import Renderer from "./renderer.js";
 import Show from "./show.js";
 export default class TVShowApp {
    tvMazeApi = null;
-   static uuid = "bPjiahSZ0zVQqd4kdfjM";
+   static uuid = "2a4mtLhtkEObDM35gsBX";
    static allLikes = [];
   
   static async initialize() {
     this.tvMazeApi = new TVMazeAPI();
     let shows = await this.tvMazeApi.getShows(1);
-    this.allLikes = await TVShowApp.getAllLikes(this.uuid);
+    // this.allLikes = await TVShowApp.getAllLikes(this.uuid);
+    this.allLikes = [];
 
     shows = shows.map((show) => {
         const showlikes = this.allLikes.find(like => like.item_id === show.id) || {likes: 0, item_id: show.id};
@@ -40,6 +41,10 @@ export default class TVShowApp {
   static async getReservations(showId) {
     const reservations = await this.tvMazeApi.getReservations(this.uuid, showId);
     return reservations;
+  }
+
+  static async postComment(showId, username, comment) {
+      const response = await this.tvMazeApi.postComments(this.uuid, showId, username, comment)
   }
 
   

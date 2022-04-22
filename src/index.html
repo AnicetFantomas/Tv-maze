@@ -31,10 +31,36 @@
         </footer>
     </main>
     <!-- comment modal box -->
-    <div id="modal-container">
-        
+
+    <div id="comment-modal" class="modal">
+        <div class="modal-content">
+          <span class="close">&times;</span>
+          <div class="movie-info">
+            <img id="show-image" />
+            <h2 id="title"></h2>
+            <p id="movie-summary"></p>
+          </div>
+          <div class="comments">
+            <h3>Comments <span id="comment-counter"></span></h3>
+            <ul id="comment-list">
+                
+            </ul>
+          </div>
+          <div class="comment-form">
+              <form id="post-comment-form">
+                  <input type="hidden" id="show_id" name="show_id">
+                  <label>Username:</label>
+                  <input type="text" name="username" placeholder="User name">
+                  <label>Comment:</label>
+                  <textarea name="comment" placeholder="Your comment goes here"></textarea>
+                  <button class="btn btn-primary" type="submit">Submit</button>
+              </form>
+          </div>
+        </div>
     </div>
 
+
+    <!-- reservation modal box -->
     <div id="reservation-popUp">
         
     </div>
