@@ -33,7 +33,7 @@ const reservationModal = async (show) =>{
 
     // children of details
     const genre = document.createElement('span');
-    genre.textContent = show.genre[0];
+    genre.textContent = show.genres[0];
 
     const language = document.createElement('span');
     language.textContent = show.language;
@@ -50,6 +50,37 @@ const reservationModal = async (show) =>{
       backshadow.style.display = 'none';
     })
 
+
+  //-------------
+
+  const reservationtForm = document.createElement('form');
+  reservationtForm.className = 'form-group comment-form';
+
+  const nameInput = document.createElement('input');
+  nameInput.type ='text';
+  nameInput.className='form-control custom-inputs userName';
+  nameInput.placeholder = 'Enter your name';
+  reservationtForm.appendChild(nameInput);
+
+  const startDateInput = document.createElement('input');
+  startDateInput.type ='date';
+  startDateInput.className='form-control custom-inputs startDate';
+  startDateInput.placeholder = 'Start date';
+  reservationtForm.appendChild(startDateInput);
+
+  const endDateInput = document.createElement('input');
+  endDateInput.type ='date';
+  endDateInput.className='form-control custom-inputs endDate';
+  endDateInput.placeholder = 'End date';
+  reservationtForm.appendChild(endDateInput);
+
+  const reservationtBtn = document.createElement('button');
+  reservationtBtn.className = 'btn btn-success btn-md';
+  reservationtBtn.textContent = 'Reserve';
+  reservationtForm.appendChild(reservationtBtn);
+
+  //---------- Display reservation
+
     const response = await TVShowApp.getReservations(show.id);
     const reservationList = document.createElement('ul');
     console.log(response);
@@ -64,6 +95,32 @@ const reservationModal = async (show) =>{
         listItem.textContent = `No Reservations exist for this show`
         reservationList.appendChild(listItem);
     }
+
+    reservationtForm.addEventListener('submit', async (e) => {
+      e.preventDefault();
+      const myUserName = document.querySelector('.userName');
+      const myStartDate = document.querySelector('.startDate');
+      const myEndDate = document.querySelector('.endDate');
+    
+        const ReserveResponse =  await fetch(`https://us-central1-involvement-api.cloudfunctions.net/capstoneApi/apps/bPjiahSZ0zVQqd4kdfjM/reservations?item_id=${show.id}`, {
+          method: 'POST',
+          body: JSON.stringify({
+            item_id : show.id,
+            username : myUserName.value.trim(),
+            date_start : myStartDate.value.trim(),
+            date_end : myEndDate.value.trim()
+          }),
+          headers: {
+            'Content-type': 'application/json; charset=UTF-8',
+          },
+      })
+      .then(response => response)
+      .then(() => {
+        myUserName.value = '';
+        myStartDate.value = '';
+        myEndDate.value = '' 
+      }) 
+      })
     
     
     // child of modal
@@ -72,31 +129,7 @@ const reservationModal = async (show) =>{
     reservationHeading.className = 'comments-heading';
 
     // child of modal
-    const reservationtForm = document.createElement('form');
-    reservationtForm.className = 'form-group comment-form';
-
-    const nameInput = document.createElement('input');
-    nameInput.type ='text';
-    nameInput.className='form-control custom-inputs';
-    nameInput.placeholder = 'Enter your name';
-    reservationtForm.appendChild(nameInput);
-
-    const startDateInput = document.createElement('input');
-    startDateInput.type ='date';
-    startDateInput.className='form-control custom-inputs';
-    startDateInput.placeholder = 'Start date';
-    reservationtForm.appendChild(startDateInput);
-
-    const endDateInput = document.createElement('input');
-    endDateInput.type ='date';
-    endDateInput.className='form-control custom-inputs';
-    endDateInput.placeholder = 'End date';
-    reservationtForm.appendChild(endDateInput);
-
-    const reservationtBtn = document.createElement('button');
-    reservationtBtn.className = 'btn btn-success btn-md';
-    reservationtBtn.textContent = 'Reserve';
-    reservationtForm.appendChild(reservationtBtn);
+    
 
     // modal appending its children
     modal.appendChild(imgDiv);
