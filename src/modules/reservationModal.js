@@ -51,6 +51,37 @@ const reservationModal = async (show) => {
   })
 
 
+  // child of modal
+  // fetching involvment API
+  let reservationContainer;
+  let reserveHeading;
+  let response = await TVShowApp.getReservations(show.id);
+  function printData() {
+    console.log('function triggered');
+    if (response.length > 0) {
+      reservationContainer = document.createElement('div');
+      reservationContainer.className = 'comments-container';
+      response.forEach((reservation) => {
+        const reserve = document.createElement('p');
+        reserve.className = 'comment';
+        reserve.textContent = `From: ${reservation.date_start} To: ${reservation.date_end} UserName: ${reservation.username}`;
+        reservationContainer.appendChild(reserve);
+      })
+      reserveHeading = document.createElement('h5');
+      reserveHeading.className = 'comments-heading';
+      reserveHeading.textContent = `Reservations (${response.length})`;
+    }
+    else {
+      reservationContainer = document.createElement('div');
+      reservationContainer.className = 'comments-container';
+      reservationContainer.textContent = 'No reservation found';
+      reserveHeading = document.createElement('h5');
+      reserveHeading.className = 'comments-heading';
+      reserveHeading.textContent = 'Reservation (0)';
+    }
+  }
+  printData();
+
   //-------------
 
   const reservationtForm = document.createElement('form');
@@ -79,22 +110,7 @@ const reservationModal = async (show) => {
   reservationtBtn.textContent = 'Reserve';
   reservationtForm.appendChild(reservationtBtn);
 
-  //---------- Display reservation
-
-  const response = await TVShowApp.getReservations(show.id);
-  const reservationList = document.createElement('ul');
-  console.log(response);
-  if (response.length > 0) {
-    response.forEach(reservation => {
-      const listItem = document.createElement('li');
-      listItem.textContent = `From: ${reservation.date_start} To: ${reservation.date_end} UserName: ${reservation.username}`
-      reservationList.appendChild(listItem);
-    });
-  } else {
-    const listItem = document.createElement('li');
-    listItem.textContent = `No Reservations exist for this show`
-    reservationList.appendChild(listItem);
-  }
+  //---------- Display reservation---------
 
   reservationtForm.addEventListener('submit', async (e) => {
     e.preventDefault();
@@ -102,13 +118,13 @@ const reservationModal = async (show) => {
     const myStartDate = document.querySelector('.startDate');
     const myEndDate = document.querySelector('.endDate');
 
-    const ReserveResponse = await fetch(`https://us-central1-involvement-api.cloudfunctions.net/capstoneApi/apps/bPjiahSZ0zVQqd4kdfjM/reservations?item_id=${show.id}`, {
+    const ReserveResponse = await fetch('https://us-central1-involvement-api.cloudfunctions.net/capstoneApi/apps/bPjiahSZ0zVQqd4kdfjM/reservations', {
       method: 'POST',
       body: JSON.stringify({
         item_id: show.id,
-        username: myUserName.value.trim(),
-        date_start: myStartDate.value.trim(),
-        date_end: myEndDate.value.trim()
+        username: myUserName.value,
+        date_start: myStartDate.value,
+        date_end: myEndDate.value
       }),
       headers: {
         'Content-type': 'application/json; charset=UTF-8',
@@ -124,22 +140,23 @@ const reservationModal = async (show) => {
         xhttp.onreadystatechange = function () {
           if (this.readyState == 4 && this.status == 200) {
             const response = JSON.parse(this.responseText);
-            if (response.length > 0) {    
-              // reservationList = document.createElement('ul');
-              response.forEach(reservation => {
-                const listItem = document.createElement('li');
-                listItem.textContent = `From: ${reservation.date_start} To: ${reservation.date_end} UserName: ${reservation.username}`
-                reservationList.appendChild(listItem);
-              });
-            } 
-            else {
-              const listItem = document.createElement('li');
-              listItem.textContent = `No Reservations exist for this show`
-              reservationList.appendChild(listItem);
+            if (response.length > 0) {
+              reservationContainer = document.createElement('div');
+              reservationContainer.className = 'comments-container';
+              response.forEach((reservation) => {
+                const reserve = document.createElement('p');
+                reserve.className = 'comment';
+                reserve.textContent = `From: ${reservation.date_start} To: ${reservation.date_end} UserName: ${reservation.username}`;
+                reservationContainer.appendChild(reserve);
+              })
+              reserveHeading = document.createElement('h5');
+              reserveHeading.className = 'comments-heading';
+              reserveHeading.textContent = `Reservations (${response.length})`;
             }
-            reservationHeading = document.createElement('h5');
-            reservationHeading.textContent = `Reservations(${response.length})`;
-            reservationHeading.className = 'comments-heading';
+
+            reserveHeading = document.createElement('h5');
+            reserveHeading.textContent = `Reservations(${response.length})`;
+            reserveHeading.className = 'comments-heading';
 
             modal.innerHTML = "";
 
@@ -147,8 +164,8 @@ const reservationModal = async (show) => {
             modal.appendChild(title);
             modal.appendChild(details);
             modal.appendChild(cross);
-            modal.appendChild(reservationHeading);
-            modal.appendChild(reservationList);
+            modal.appendChild(reserveHeading);
+            modal.appendChild(reservationContainer);
             modal.appendChild(reservationtForm);
 
           }
@@ -158,22 +175,13 @@ const reservationModal = async (show) => {
       })
   })
 
-
-  // child of modal
-  const reservationHeading = document.createElement('h5');
-  reservationHeading.textContent = `Reservations(${response.length})`;
-  reservationHeading.className = 'comments-heading';
-
-  // child of modal
-
-
   // modal appending its children
   modal.appendChild(imgDiv);
   modal.appendChild(title);
   modal.appendChild(details);
   modal.appendChild(cross);
-  modal.appendChild(reservationHeading);
-  modal.appendChild(reservationList);
+  modal.appendChild(reserveHeading);
+  modal.appendChild(reservationContainer);
   modal.appendChild(reservationtForm);
 
   // backshadow appending modal
