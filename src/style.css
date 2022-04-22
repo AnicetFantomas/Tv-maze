@@ -107,6 +107,13 @@ figure {
   background-color: rgb(60, 148, 139) !important;
 }
 
+.show-count {
+    font-weight: bold;
+    font-size: medium;
+    margin-left: 40px;
+    padding: 25px 0 25px 0;
+}
+
 /* modal css */
 .backshadow {
   width: 100%;
