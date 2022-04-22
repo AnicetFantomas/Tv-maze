@@ -99,16 +99,16 @@ const reservationModal = async (show) =>{
       const myStartDate = document.getElementById('myStartDate');
       const myEndDate = document.getElementById('myEndDate');
 
-      fetch(url);
+      fetch(`https://us-central1-involvement-api.cloudfunctions.net/capstoneApi/apps/bPjiahSZ0zVQqd4kdfjM/reservations?item_id=${show.id}`);
       method : 'POST';
       body: JSON.stringify({
         username : myUserName.value.trim(),
         date_start : myStartDate.value.trim(),
         date_end : myEndDate.value.trim()
       })
-
+      
     })
-    
+
     // modal appending its children
     modal.appendChild(imgDiv);
     modal.appendChild(title);
