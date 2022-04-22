@@ -1,4 +1,4 @@
-const reservationModal = (show) =>{
+const reservationModal = async (show) =>{
     // modal container
     const modalContainer = document.getElementById('reservation-popUp');
 
@@ -55,27 +55,26 @@ const reservationModal = (show) =>{
 
     // child of modal
     const reservationtForm = document.createElement('form');
-    reservationtForm.className = 'form-group comment-form';
+    reservationtForm.className = 'form-group comment-form my-form';
 
     const nameInput = document.createElement('input');
     nameInput.type ='text';
     nameInput.className='form-control custom-inputs';
+    nameInput.setAttribute('id', 'myUserName');
     nameInput.placeholder = 'Enter your name';
     reservationtForm.appendChild(nameInput);
 
     const startDateInput = document.createElement('input');
     startDateInput.type ='date';
     startDateInput.className='form-control custom-inputs';
+    startDateInput.setAttribute('id', 'myStartDate')
     startDateInput.placeholder = 'Start date';
     reservationtForm.appendChild(startDateInput);
 
-    const reservationList = document.createElement('ul');
- 
-
- 
     const endDateInput = document.createElement('input');
     endDateInput.type ='date';
     endDateInput.className='form-control custom-inputs';
+    endDateInput.setAttribute('id', 'myEndDate');
     endDateInput.placeholder = 'End date';
     reservationtForm.appendChild(endDateInput);
 
@@ -83,14 +82,40 @@ const reservationModal = (show) =>{
     reservationtBtn.className = 'btn btn-success btn-md';
     reservationtBtn.textContent = 'Reserve';
     reservationtForm.appendChild(reservationtBtn);
+//--------------- display reservations
+    const reservationList = document.createElement('ul');
+  
+    const url = await fetch(`https://us-central1-involvement-api.cloudfunctions.net/capstoneApi/apps/bPjiahSZ0zVQqd4kdfjM/reservations?item_id=${show.id}`);
+    const response = await url.json();
+    console.log(response);
 
+    response.forEach( element => {
+      reservationList.innerHTML = `<li>${element.username} : ${element.date_start} - ${element.date_end}</li>`
+    });
+
+    reservationtForm.addEventListener('submit', (e) => {
+      e.preventDefault();
+      const myUserName = document.getElementById('myUserName');
+      const myStartDate = document.getElementById('myStartDate');
+      const myEndDate = document.getElementById('myEndDate');
+
+      fetch(url);
+      method : 'POST';
+      body: JSON.stringify({
+        username : myUserName.value.trim(),
+        date_start : myStartDate.value.trim(),
+        date_end : myEndDate.value.trim()
+      })
+
+    })
+    
     // modal appending its children
     modal.appendChild(imgDiv);
     modal.appendChild(title);
     modal.appendChild(details);
     modal.appendChild(cross);
     modal.appendChild(commentsHeading);
-    // modal.appendChil(reservationList);
+    modal.appendChild(reservationList);
     modal.appendChild(reservationtForm);
 
     // backshadow appending modal
