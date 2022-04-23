@@ -28,6 +28,7 @@
   from {
     transform: rotate(0deg);
   }
+
   to {
     transform: rotate(359deg);
   }
@@ -40,7 +41,7 @@ nav {
   align-items: center;
 }
 
- nav ul {
+nav ul {
   list-style: none;
   padding: 0;
   display: flex;
@@ -55,6 +56,7 @@ nav {
   color: #fff;
   font-weight: bold;
   font-size: 25px;
+  transition: all ease 0.5s;
 }
 
 .nav-item:hover {
@@ -75,10 +77,6 @@ nav {
   align-items: center;
 }
 
-.modal-content{
-  width: 60%;
-}
-
 .show-list {
   display: grid;
   grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
@@ -89,10 +87,7 @@ nav {
 }
 
 .show-item {
-  background-color: #fff;
-  margin-bottom: 60px;
   perspective: 1000px;
-  height: 400px;
   width: 240px;
   display: flex;
   align-items: center;
@@ -114,6 +109,11 @@ nav {
   height: 100%;
 }
 
+.my-title {
+  font-weight: bold;
+  font-size: 15px;
+}
+
 figcaption {
   display: flex;
   justify-content: space-between;
@@ -122,6 +122,7 @@ figcaption {
 
 figcaption .likebutton {
   width: 30px !important;
+  height: 30px;
   cursor: pointer;
   transition: all 0.2s ease-in-out;
 }
@@ -133,7 +134,15 @@ figcaption .likebutton:hover {
 }
 
 figure {
+  display: flex;
+  background-color: #fff;
+  flex-direction: column;
   border: 5px solid white;
+  height: 500px;
+}
+
+.btn {
+  margin-bottom: 10px;
 }
 
 .card-comment-btn {
@@ -256,7 +265,7 @@ figure {
   margin: 15% auto;
   padding: 20px;
   border: 1px solid #888;
-  width: 80%;
+  width: 70%;
 }
 
 /* The Close Button */
