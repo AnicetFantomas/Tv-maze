@@ -1,4 +1,4 @@
-import TVShowApp from './src/App';
+import TVShowApp from './src/App.js';
 
 describe('Testing Application counters ...', () => {
   const mockedComments = [
