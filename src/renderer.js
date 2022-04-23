@@ -11,7 +11,7 @@ export default class Renderer{
         movieList.innerHTML += `<li class='show-item'>
             <figure>
                 <img src='${shows[i].image}'>
-                <figcaption>${shows[i].title}
+                <figcaption><div class = "my-title">${shows[i].title}</div>
                   <img class='likebutton' src='https://img.icons8.com/ios-filled/50/000000/hearts.png'>
                   <span id='likes_${shows[i].id}'>${shows[i].likes} ${shows[i].likes <= 1 ? 'Like':'Likes'}</span>
                 </figcaption>

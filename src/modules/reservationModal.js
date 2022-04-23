@@ -29,7 +29,7 @@ const reservationModal = async (showId, shows) => {
   if (response.length > 0){
     reservationList.innerHTML = "";
       response.forEach(reservation => {
-        reservationList.innerHTML += `<li>Date: ${reservation.username}:<p>From: ${reservation.date_start} To: ${reservation.date_end}</p></li>`;
+        reservationList.innerHTML += `<li> Name: ${reservation.username}:<p>From: ${reservation.date_start} To: ${reservation.date_end}</p></li>`;
       });
   } else {
     reservationList.innerHTML = "There are no Reservations for this show!";
