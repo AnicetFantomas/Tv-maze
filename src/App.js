@@ -37,6 +37,18 @@ export default class TVShowApp {
       return comments;
   }
 
+  static getCommentCount(comments) {
+      return comments.length;
+  }
+
+  static getReservationCount(reservations){
+      return reservations.length;
+  }
+
+  static getShowsCounter(shows) {
+    return shows.length;
+  }
+
   static async getReservations(showId) {
     const reservations = await this.tvMazeApi.getReservations(this.uuid, showId);
     return reservations;

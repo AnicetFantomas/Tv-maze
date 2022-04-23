@@ -28,7 +28,6 @@ const commentModal = async (showId, shows) => {
   if (response.length > 0){
   commentList.innerHTML = "";
     response.forEach(comment => {
-      console.log(comment);
       commentList.innerHTML += `<li>Date: ${comment.creation_date}:<p> ${comment.comment}</p> - By: ${comment.username}</li>`;
     });
   }else{
