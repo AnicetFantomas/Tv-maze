@@ -75,8 +75,9 @@ nav ul {
   padding: 15px;
   margin-top: 20px;
   display: flex;
-  justify-content: center;
+  justify-content: flex-start;
   align-items: center;
+  color: white;
 }
 
 .show-list {
@@ -156,6 +157,7 @@ figure {
   font-size: medium;
   margin-left: 40px;
   padding: 25px 0 25px 0;
+  color:white;
 }
 
 #reservation-show-image {
