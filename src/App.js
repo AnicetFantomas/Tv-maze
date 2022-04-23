@@ -3,7 +3,7 @@ import Renderer from "./renderer.js";
 import Show from "./show.js";
 export default class TVShowApp {
    tvMazeApi = null;
-   static uuid = "bPjiahSZ0zVQqd4kdfjM";
+   static uuid = "2a4mtLhtkEObDM35gsBX";
    static allLikes = [];
   
   static async initialize() {
@@ -37,9 +37,29 @@ export default class TVShowApp {
       return comments;
   }
 
+  static getCommentCount(comments) {
+      return comments.length;
+  }
+
+  static getReservationCount(reservations){
+      return reservations.length;
+  }
+
+  static getShowsCounter(shows) {
+    return shows.length;
+  }
+
   static async getReservations(showId) {
     const reservations = await this.tvMazeApi.getReservations(this.uuid, showId);
     return reservations;
+  }
+
+  static async postComment(showId, username, comment) {
+      const response = await this.tvMazeApi.postComments(this.uuid, showId, username, comment)
+  }
+
+  static async postReservation(showId, username, start_date, end_date) {
+      const response = await this.tvMazeApi.postReservations(this.uuid, showId, username, start_date, end_date);
   }
 
   

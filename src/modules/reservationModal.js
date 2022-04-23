@@ -1,117 +1,38 @@
 import TVShowApp from "../App";
 
-const reservationModal = async (show) =>{
-    // modal container
-    const modalContainer = document.getElementById('reservation-popUp');
+const reservationModal = async (showId, shows) => {
 
-    // boxshadow child of modal container
-    const backshadow = document.createElement('div');
-    backshadow.className = 'backshadow';
+  const show = shows.find(t => t.id === parseInt(showId));
 
-    // modal child of backshadow
-    const modal = document.createElement('div');
-    modal.className = 'modal';
+  const reservationModalView = document.getElementById('reservation-modal');
+  reservationModalView.style.display = 'block';
 
-    // child of modal
-    const imgDiv = document.createElement('div');
-    imgDiv.className = 'img-div';
+  const imgEl = reservationModalView.querySelector('#reservation-show-image');
+  const showTitleEl = reservationModalView.querySelector('.movie-info #reservation-title');
+  const showSummaryEl = reservationModalView.querySelector('.movie-info #reservation-movie-summary');
+  const reservationCounter = reservationModalView.querySelector('.reservations #reservation-counter');
+  const reservationList = reservationModalView.querySelector('.reservations #reservation-list');
+  const closeEl = reservationModalView.querySelector('.close');
+  const showIdEl = reservationModalView.querySelector('form #show_id-resrv');
 
-    // child of imgDiv
-    const commentModalImg = document.createElement('img');
-    commentModalImg.src = show.image;
-    commentModalImg.setAttribute('alt',"moview-image");
-    imgDiv.appendChild(commentModalImg);
+  showIdEl.value = showId;
 
-    // child of modal
-    const title = document.createElement('h3');
-    title.textContent = show.title;
-    title.className = 'movie-title';
+  closeEl.addEventListener('click', () => {reservationModalView.style.display = 'none';});
 
-    // child of modal
-    const details = document.createElement('div');
-    details.className = 'movie-details';
+  imgEl.src = show.image;
+  showTitleEl.textContent = show.title;
+  showSummaryEl.innerHTML = show.summary;
 
-    // children of details
-    const genre = document.createElement('span');
-    genre.textContent = show.genre[0];
+  const response = await TVShowApp.getReservations(showId);
+  reservationCounter.textContent = `(${typeof response.length === 'undefined' ? 0 : response.length})`;
 
-    const language = document.createElement('span');
-    language.textContent = show.language;
-
-    // details appending its children
-    details.appendChild(genre);
-    details.appendChild(language);
-
-    // child of modal
-    const cross = document.createElement('i');
-    cross.className = 'fa-solid fa-xmark fa-xl cross';
-
-    cross.addEventListener('click',()=>{
-      backshadow.style.display = 'none';
-    })
-
-    const response = await TVShowApp.getReservations(show.id);
-    const reservationList = document.createElement('ul');
-    console.log(response);
-    if (response.length > 0) {
+  if (response.length > 0){
+    reservationList.innerHTML = "";
       response.forEach(reservation => {
-        const listItem = document.createElement('li');
-        listItem.textContent = `From: ${reservation.date_start} To: ${reservation.date_end} UserName: ${reservation.username}`
-        reservationList.appendChild(listItem);
+        reservationList.innerHTML += `<li>Date: ${reservation.username}:<p>From: ${reservation.date_start} To: ${reservation.date_end}</p></li>`;
       });
-    }else{
-      const listItem = document.createElement('li');
-        listItem.textContent = `No Reservations exist for this show`
-        reservationList.appendChild(listItem);
-    }
-    
-    
-    // child of modal
-    const reservationHeading = document.createElement('h5');
-    reservationHeading.textContent = `Reservations(${response.length})`;
-    reservationHeading.className = 'comments-heading';
-
-    // child of modal
-    const reservationtForm = document.createElement('form');
-    reservationtForm.className = 'form-group comment-form';
-
-    const nameInput = document.createElement('input');
-    nameInput.type ='text';
-    nameInput.className='form-control custom-inputs';
-    nameInput.placeholder = 'Enter your name';
-    reservationtForm.appendChild(nameInput);
-
-    const startDateInput = document.createElement('input');
-    startDateInput.type ='date';
-    startDateInput.className='form-control custom-inputs';
-    startDateInput.placeholder = 'Start date';
-    reservationtForm.appendChild(startDateInput);
-
-    const endDateInput = document.createElement('input');
-    endDateInput.type ='date';
-    endDateInput.className='form-control custom-inputs';
-    endDateInput.placeholder = 'End date';
-    reservationtForm.appendChild(endDateInput);
-
-    const reservationtBtn = document.createElement('button');
-    reservationtBtn.className = 'btn btn-success btn-md';
-    reservationtBtn.textContent = 'Reserve';
-    reservationtForm.appendChild(reservationtBtn);
-
-    // modal appending its children
-    modal.appendChild(imgDiv);
-    modal.appendChild(title);
-    modal.appendChild(details);
-    modal.appendChild(cross);
-    modal.appendChild(reservationHeading);
-    modal.appendChild(reservationList);
-    modal.appendChild(reservationtForm);
-
-    // backshadow appending modal
-    backshadow.appendChild(modal);
-
-    // modal container appending backshadow
-    modalContainer.appendChild(backshadow);
+  } else {
+    reservationList.innerHTML = "There are no Reservations for this show!";
+  }
 }
-
 export default reservationModal;
