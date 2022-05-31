@@ -6,6 +6,10 @@ It is a single page application named AniHamzAl based on the names of members in
 
 ![screencapture-localhost-8080-2022-04-23-13_04_11](https://user-images.githubusercontent.com/4713955/164895924-a7f126fe-4030-48fd-8daa-4c4b912fe4e0.png)[](..........\4713955\164895924-a7f126fe-4030-48fd-8daa-4c4b912fe4e0.png)
 
+## [Live Demo](https://famous-lebkuchen-8dcdb2.netlify.app/)
+
+To get a local copy up and running follow these simple steps.
+
 # Built With
 
 - HTML
