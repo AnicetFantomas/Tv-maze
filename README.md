@@ -47,7 +47,7 @@ Run 'npm install' in your code terminal to install the packages. It will also in
 - Twitter: [@@Al_Kfx](https://github.com/sabetech)
 - LinkedIn: [Albert Mensah-Ansah](https://www.linkedin.com/in/Albertkma/)
 
-**Albert Mensah-Ansah**
+** Anicet Murhula**
 
 - GitHub: [@AnicetFantomas](https://github.com/AnicetFantomas)
 - LinkedIn: [Anicet Murhula](https://www.linkedin.com/in/anicet-murhula-13a1b0220/)
